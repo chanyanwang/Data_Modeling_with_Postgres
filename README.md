@@ -22,14 +22,14 @@ Once we have the queries, this file we will:
 Once creating the tables, we performance an ETL pipeline from log_data, song_data insert into 5 tables created in database sparkify.
 Moreover the schema is defines as following:
  - **Fact Table** 
-    songplays - records in log data associated with song plays i.e. records with page NextSong
-                songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent
+    - songplays - records in log data associated with song plays i.e. records with page NextSong:
+         - songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent
  - ** Dimension Tables **
-    users - users in the app
-    user_id, first_name, last_name, gender, level
-    songs - songs in music database
-    song_id, title, artist_id, year, duration
-    artists - artists in music database
-    artist_id, name, location, latitude, longitude
-    time - timestamps of records in songplays broken down into specific units
-    start_time, hour, day, week, month, year, weekday
+    - users - users in the app
+        - user_id, first_name, last_name, gender, level
+    - songs - songs in music database :
+        - song_id, title, artist_id, year, duration
+    - artists - artists in music database
+        - artist_id, name, location, latitude, longitude
+    - time - timestamps of records in songplays broken down into specific units
+        - start_time, hour, day, week, month, year, weekday

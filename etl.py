@@ -64,7 +64,7 @@ def process_log_file(cur, filepath):
     # insert user records
     for i, row in user_df.iterrows():
         cur.execute(user_table_insert, row)
-
+    
     # insert songplay records
     for index, row in df.iterrows():
         
@@ -78,7 +78,7 @@ def process_log_file(cur, filepath):
             songid, artistid = None, None
 
         # insert songplay record
-        songplay_data =  (index, pd.to_datetime(df['ts'][index], unit='ms'), row.userId, row.level, songid, artistid, row.itemInSession, row.location, row.userAgent)
+        songplay_data =  ( pd.to_datetime(df['ts'][index], unit='ms'), row.userId, row.level, songid, artistid, row.itemInSession, row.location, row.userAgent)
         cur.execute(songplay_table_insert, songplay_data)
 
 

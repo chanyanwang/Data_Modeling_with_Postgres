@@ -6,11 +6,21 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    """
+    Process song file into song table and artist table
+    
+    Arguments:
+        cur: cursor of database's connection 
+        filepath: file path for read JSON file
+        
+    Return:
+    """
     # open song file
     df = pd.read_json(filepath, lines=True) 
 
     # insert song record
     song_data = df[['song_id', 'title', 'artist_id', 'year', 'duration']].values.tolist()[0]
+
     cur.execute(song_table_insert, song_data)
     
     # insert artist record
@@ -19,6 +29,15 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    """
+    Process log file into time table, user table and songplay table
+    
+    Arguments:
+        cur: cursor of database's connection 
+        filepath: file path for read JSON file
+        
+    Return:
+    """
     # open log file
     df = pd.read_json(filepath, lines=True) 
 
@@ -52,6 +71,7 @@ def process_log_file(cur, filepath):
         
         # get songid and artistid from song and artist tables
         #cur.execute(song_select, (row.song, row.artist, round(row.length,2) ))
+
         cur.execute(song_select, (row.song, row.artist))
         results = cur.fetchone()
         
@@ -66,6 +86,16 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    """
+    Process data into tables
+    
+    Arguments:
+        cur: cursor of database's connection
+        conn: database's connection
+        filpath: file path of folder where store many files of data
+        func: function to read data 
+    """
+    
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -85,6 +115,10 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    """
+    Performance an ETL pipeline from data file into database of star schema
+    """
+    
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 

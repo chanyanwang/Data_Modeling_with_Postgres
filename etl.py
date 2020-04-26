@@ -20,7 +20,6 @@ def process_song_file(cur, filepath):
 
     # insert song record
     song_data = df[['song_id', 'title', 'artist_id', 'year', 'duration']].values.tolist()[0]
-
     cur.execute(song_table_insert, song_data)
     
     # insert artist record
@@ -70,8 +69,6 @@ def process_log_file(cur, filepath):
     for index, row in df.iterrows():
         
         # get songid and artistid from song and artist tables
-        #cur.execute(song_select, (row.song, row.artist, round(row.length,2) ))
-
         cur.execute(song_select, (row.song, row.artist))
         results = cur.fetchone()
         
@@ -95,7 +92,6 @@ def process_data(cur, conn, filepath, func):
         filpath: file path of folder where store many files of data
         func: function to read data 
     """
-    
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -118,7 +114,6 @@ def main():
     """
     Performance an ETL pipeline from data file into database of star schema
     """
-    
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 

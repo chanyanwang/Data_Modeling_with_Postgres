@@ -7,7 +7,7 @@ artist_table_drop = "DROP TABLE IF EXISTS artists"
 time_table_drop = "DROP TABLE IF EXISTS time"
 
 # CREATE TABLES
-# We didn't add NOT NULL to song_id and artist_id, because in our cause there are null and are accepted
+
 songplay_table_create = (""" 
         CREATE TABLE IF NOT EXISTS songplays (
             songplay_id INT PRIMARY KEY, 
@@ -133,17 +133,19 @@ time_table_insert = ("""
         ON CONFLICT DO NOTHING
 """)
 
+
 # FIND SONGS
 
 song_select = (""" 
-        SELECT 
-            s.song_id,
-            a.artist_id 
-        FROM songs s 
-        JOIN artists a on a.artist_id = s.artist_id 
-        WHERE s.title = %s and s.artist_id = %s
+    SELECT 
+        s.song_id,
+        a.artist_id 
+    FROM songs s 
+    JOIN artists a ON a.artist_id = s.artist_id 
+    WHERE s.title like %s and a.name like %s
 """)
 
 # QUERY LISTS
-create_table_queries = [time_table_create,  user_table_create, artist_table_create, song_table_create, songplay_table_create]
-drop_table_queries = [time_table_create,  user_table_create, artist_table_create, song_table_create, songplay_table_create]
+
+create_table_queries = [songplay_table_create, user_table_create, song_table_create, artist_table_create, time_table_create]
+drop_table_queries = [songplay_table_drop, user_table_drop, song_table_drop, artist_table_drop, time_table_drop]
